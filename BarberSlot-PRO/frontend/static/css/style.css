@@ -1,0 +1,403 @@
+/* =========================================
+   CONFIGURACIÓN Y VARIABLES
+   ========================================= */
+:root {
+    --primary: #d9a433;
+    --bg-dark: #0a0a0a;
+    --bg-card: #161616;
+    --text-white: #ffffff;
+    --text-gray: #a0a0a0;
+    --nav-height: 80px;
+    --transition: 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* =========================================
+   TIPOGRAFÍA
+   ========================================= */
+h1, h2, h3, .logo {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.logo {
+    font-size: 1.8rem;
+    text-decoration: none;
+    color: var(--text-white);
+}
+
+.logo span { color: var(--primary); }
+
+/* =========================================
+   NAVBAR (FIJA)
+   ========================================= */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: var(--nav-height);
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--text-white);
+    text-decoration: none;
+    margin-left: 30px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    transition: var(--transition);
+}
+
+.nav-links a:hover { color: var(--primary); }
+
+.nav-btn {
+    border: 1px solid var(--primary);
+    padding: 10px 20px;
+    border-radius: 2px;
+}
+
+.nav-btn:hover {
+    background: var(--primary);
+    color: #000;
+}
+
+/* =========================================
+   HERO SECTION (CORREGIDA)
+   ========================================= */
+.hero {
+    min-height: 100vh;
+    padding-top: var(--nav-height); /* Evita que la navbar tape el texto */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), 
+                url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Efecto parallax suave */
+}
+
+.hero-content {
+    max-width: 850px;
+    padding: 40px 20px;
+    animation: fadeIn 1.2s ease-out;
+}
+
+.hero-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--primary);
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+
+.hero h1 {
+    font-size: clamp(2.2rem, 7vw, 4.5rem);
+    line-height: 1.1;
+    margin-bottom: 25px;
+}
+
+.hero h1 span { color: var(--primary); }
+
+.hero-description {
+    color: var(--text-gray);
+    font-size: 1.1rem;
+    max-width: 650px;
+    margin: 0 auto 40px;
+}
+
+/* =========================================
+   BOTONES
+   ========================================= */
+.btn-primary {
+    display: inline-block;
+    padding: 18px 45px;
+    background: var(--primary);
+    color: #000;
+    text-decoration: none;
+    font-family: 'Oswald', sans-serif;
+    font-weight: bold;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    text-transform: uppercase;
+}
+
+.btn-primary:hover {
+    background: var(--text-white);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+/* =========================================
+   ESTILOS AUTH (LOGIN/REGISTRO)
+   ========================================= */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    background: radial-gradient(circle, #1a1a1a 0%, #0a0a0a 100%);
+}
+
+.form-box {
+    background: var(--bg-card);
+    padding: 50px 40px;
+    width: 100%;
+    max-width: 420px;
+    border-top: 4px solid var(--primary);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+}
+
+.input-group { margin-bottom: 25px; text-align: left; }
+.input-group label { display: block; color: var(--primary); font-size: 0.75rem; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; }
+.form-box input { width: 100%; padding: 14px; background: #222; border: 1px solid #333; color: #fff; outline: none; transition: var(--transition); }
+.form-box input:focus { border-color: var(--primary); background: #2a2a2a; }
+
+/* =========================================
+   ANIMACIONES
+   ========================================= */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero h1 { font-size: 2.5rem; }
+}
+
+/* =========================================
+   DASHBOARD
+   ========================================= */
+.dashboard-container {
+    padding-top: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-card {
+    background: var(--bg-card);
+    padding: 50px;
+    max-width: 600px;
+    text-align: center;
+    border-top: 4px solid var(--primary);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    animation: fadeIn 1s ease;
+}
+
+.welcome-card span {
+    color: var(--primary);
+}
+
+.dashboard-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.btn-secondary {
+    padding: 18px 45px;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    text-decoration: none;
+    font-family: 'Oswald', sans-serif;
+    transition: var(--transition);
+}
+
+.btn-secondary:hover {
+    background: var(--primary);
+    color: #000;
+}
+
+.form-box select {
+    width: 100%;
+    padding: 14px;
+    background: #222;
+    border: 1px solid #333;
+    color: #fff;
+    outline: none;
+    transition: var(--transition);
+}
+
+.form-box select:focus {
+    border-color: var(--primary);
+}
+table {
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #1f1f1f;
+}
+
+hr {
+    opacity: 0.2;
+}
+
+h3 {
+    margin-bottom: 15px;
+    color: var(--primary);
+}
+
+p {
+    margin: 8px 0;
+    color: var(--text-gray);
+}
+
+/* =========================================
+   TABLAS PRO (MEJORADO)
+   ========================================= */
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Scroll en celulares si la tabla es grande */
+    margin-top: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px; /* Espacio entre filas */
+}
+
+th {
+    background-color: transparent;
+    color: var(--primary);
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    padding: 15px;
+    border-bottom: 2px solid #222;
+}
+
+td {
+    padding: 20px 15px;
+    background-color: #1a1a1a; /* Fondo sutil para cada fila */
+    color: var(--text-gray);
+    font-size: 0.9rem;
+}
+
+/* Redondear bordes de las filas */
+td:first-child { border-radius: 5px 0 0 5px; }
+td:last-child { border-radius: 0 5px 5px 0; }
+
+tr:hover td {
+    background-color: #222;
+    color: var(--text-white);
+    transition: var(--transition);
+}
+
+/* BADGES DE ESTADO (Para el Dashboard Admin) */
+.badge {
+    padding: 5px 12px;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.badge-pago { background: #28a745; color: #fff; } /* Verde para pagado */
+.badge-pendiente { background: var(--primary); color: #000; }
+
+/* OPTIMIZACIÓN DE FORMULARIOS EN ADMIN */
+.admin-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.admin-form .btn-primary {
+    grid-column: span 2; /* El botón ocupa todo el ancho */
+    margin-top: 10px;
+}
+
+/* LISTA DE BARBEROS (ESTILO CARD) */
+.barbero-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #111;
+    border-left: 3px solid var(--primary);
+    margin-bottom: 10px;
+}
+
+/* =========================================
+   REFINAMIENTO DE AUTH
+   ========================================= */
+.form-box h3 {
+    margin: 10px 0 30px;
+    font-size: 0.9rem;
+    color: var(--text-gray);
+    letter-spacing: 3px;
+    font-weight: 300;
+}
+
+.form-footer {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+}
+
+.form-footer a {
+    color: var(--text-gray);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: var(--transition);
+}
+
+.form-footer a:hover {
+    color: var(--primary);
+}
+
+/* Efecto de cristal esmerilado opcional para el form-box */
+.form-box {
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}

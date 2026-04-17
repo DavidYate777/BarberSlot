@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservar Cita | BarberSlot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="/dashboard" class="logo">BARBER<span>SLOT</span></a>
+        <div class="nav-links">
+            <a href="/dashboard">Panel</a>
+            <a href="/dashboard/mis-citas">Mis Citas</a>
+            <a href="/logout" class="nav-btn">Salir</a>
+        </div>
+    </div>
+</nav>
+
+<div class="auth-container">
+    <div class="form-box" style="max-width: 500px;">
+        <h2>Agendar <span>Tu Espacio</span></h2>
+        <p style="margin-bottom: 25px; font-size: 0.9rem;">Selecciona el momento ideal para tu cambio de look.</p>
+
+        <form method="POST">
+            <div class="input-group">
+                <label>¿Qué día nos visitas?</label>
+                <input type="date" name="fecha" required>
+            </div>
+
+            <div class="input-group">
+                <label>¿En qué horario?</label>
+                <input type="time" name="hora" required>
+            </div>
+
+            <div class="input-group">
+                <label>Servicio deseado</label>
+                <select name="servicio">
+                    <option value="" disabled selected>Selecciona un servicio...</option>
+                    {% for s in servicios %}
+                    <option value="{{ s[0] }}">{{ s[1] }} — ${{ s[2] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Elige a tu barbero</label>
+                <select name="barbero">
+                    <option value="" disabled selected>Selecciona un profesional...</option>
+                    {% for b in barberos %}
+                    <option value="{{ b[0] }}">{{ b[1] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; margin-top: 10px;">CONFIRMAR RESERVA</button>
+        </form>
+        
+        <p style="margin-top: 20px; font-size: 0.8rem;">
+            <a href="/dashboard" style="color: var(--text-gray); text-decoration: underline;">Volver al panel principal</a>
+        </p>
+    </div>
+</div>
+
+</body>
+</html>

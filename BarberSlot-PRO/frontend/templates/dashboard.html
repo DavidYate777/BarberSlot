@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | BarberSlot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="/dashboard" class="logo">BARBER<span>SLOT</span></a>
+        <div class="nav-links">
+            <a href="/dashboard/reservas">NUEVA CITA</a>
+            <a href="/dashboard/mis-citas">MIS CITAS</a>
+            <a href="/logout" class="nav-btn">SALIR</a>
+        </div>
+    </div>
+</nav>
+
+<div class="dashboard-container">
+    <div class="welcome-card" style="max-width: 800px;">
+        <div style="margin-bottom: 30px;">
+            <p class="hero-subtitle" style="font-size: 1rem; margin: 0;">Panel de Cliente</p>
+            <h1 style="font-size: 3rem;">Bienvenido, <span>{{ user }}</span></h1>
+            <p style="color: var(--text-gray);">¿Qué vamos a hacer hoy por tu estilo?</p>
+        </div>
+
+        <div class="dashboard-actions" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px;">
+            
+            <a href="{{ url_for('reservas') }}" class="btn-primary" style="padding: 40px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: auto;">
+                <span style="font-size: 2rem; margin-bottom: 10px;">📅</span>
+                RESERVAR CITA
+            </a>
+
+            <a href="{{ url_for('mis_citas') }}" class="btn-secondary" style="padding: 40px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: auto;">
+                <span style="font-size: 2rem; margin-bottom: 10px;">📋</span>
+                VER MIS CITAS
+            </a>
+
+        </div>
+
+        <div style="margin-top: 40px; padding: 20px; border: 1px dashed #333; border-radius: 4px;">
+            <p style="font-size: 0.85rem; font-style: italic;">"La caballerosidad nunca pasa de moda, y un buen corte tampoco."</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

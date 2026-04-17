@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Socio | BarberSlot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <a href="/" style="position: absolute; top: 30px; left: 30px; color: var(--text-gray); text-decoration: none; font-size: 0.8rem; letter-spacing: 1px;">← VOLVER AL INICIO</a>
+
+        <form class="form-box" method="POST" action="/register">
+            <h2 class="logo">BARBER<span>SLOT</span></h2>
+            <h3>REGISTRO DE SOCIO</h3>
+
+            <div class="input-group">
+                <label>Nombre Completo</label>
+                <input type="text" name="nombre" placeholder="Nombre y Apellidos" required>
+            </div>
+
+            <div class="input-group">
+                <label>Correo Electrónico</label>
+                <input type="email" name="correo" placeholder="correo@ejemplo.com" required>
+            </div>
+            
+            <div class="input-group" style="margin-bottom: 35px;">
+                <label>Contraseña</label>
+                <input type="password" name="password" placeholder="Mínimo 8 caracteres" required>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width: 100%;">UNIRME AHORA</button>
+            
+            <div class="form-footer">
+                <a href="/login">¿Ya tienes cuenta? <strong>Inicia sesión aquí</strong></a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

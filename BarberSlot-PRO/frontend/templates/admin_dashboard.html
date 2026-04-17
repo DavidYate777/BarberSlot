@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Control | BarberSlot Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="/admin" class="logo">BARBER<span>SLOT</span></a>
+        <div class="nav-links">
+            <a href="/admin/barberos">Barberos</a>
+            <a href="/admin/servicios">Servicios</a>
+            <a href="/admin/horarios">Horarios</a>
+            <a href="/logout" class="nav-btn">Salir</a>
+        </div>
+    </div>
+</nav>
+
+<div class="dashboard-container" style="padding-bottom: 50px;">
+    <div class="welcome-card" style="max-width: 1100px; width: 95%;">
+        <h2>Panel <span>Administrador</span></h2>
+        <p>Control central de citas y estado de pagos de la barbería.</p>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Servicio</th>
+                        <th>Monto</th>
+                        <th>Estado Pago</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in citas %}
+                    <tr>
+                        <td style="color: white; font-weight: bold;">{{ c[0] }}</td>
+                        <td>{{ c[1] }}</td>
+                        <td>{{ c[2] }}</td>
+                        <td>{{ c[3] }}</td>
+                        <td style="color: var(--primary); font-weight: bold;">${{ c[4] }}</td>
+                        <td>
+                            {% if c[5] == 'Pendiente' %}
+                            <span class="badge badge-pendiente">Pendiente</span>
+                            {% else %}
+                            <span class="badge badge-pago">Completado</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6">No hay citas registradas para hoy.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
