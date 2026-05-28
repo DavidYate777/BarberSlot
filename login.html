@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Iniciar Sesion — BarberSlot</title>
 
-  <link rel="stylesheet" href="static/style.css">
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Iniciar Sesion — BarberSlot
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="static/style.css"
+  >
+
 </head>
+
 <body>
 
+  <!-- HEADER -->
   <header class="header">
 
     <a href="index.html" class="logo">
@@ -16,20 +30,27 @@
     </a>
 
     <nav class="navbar">
-      <a href="index.html">Inicio</a>
+
+      <a href="index.html">
+        Inicio
+      </a>
 
       <a href="registro.html" class="btn-nav">
         Crear Cuenta
       </a>
+
     </nav>
 
   </header>
 
+  <!-- LOGIN -->
   <main class="form-page">
 
     <div class="form-card">
 
-      <div class="form-logo">BarberSlot</div>
+      <div class="form-logo">
+        BarberSlot
+      </div>
 
       <p class="form-subtitle">
         Accede a tu cuenta para gestionar tus citas
@@ -37,15 +58,17 @@
 
       <div class="form-divider"></div>
 
+      <!-- MENSAJES -->
       <div
         class="alert alert-success"
         id="demo-msg"
         style="display:none;"
       ></div>
 
-      <!-- FORMULARIO -->
+      <!-- FORM -->
       <form id="loginForm">
 
+        <!-- EMAIL -->
         <div class="field">
 
           <label for="email">
@@ -62,6 +85,7 @@
 
         </div>
 
+        <!-- PASSWORD -->
         <div class="field">
 
           <label for="password">
@@ -78,6 +102,7 @@
 
         </div>
 
+        <!-- OPTIONS -->
         <div
           style="
             margin-bottom:1.6rem;
@@ -95,9 +120,6 @@
               align-items:center;
               gap:8px;
               cursor:pointer;
-              text-transform:none;
-              font-weight:400;
-              letter-spacing:0;
             "
           >
 
@@ -118,13 +140,17 @@
 
           <a
             href="#"
-            style="color:var(--gold); font-size:0.8rem;"
+            style="
+              color:var(--gold);
+              font-size:0.8rem;
+            "
           >
             Olvide mi contrasena
           </a>
 
         </div>
 
+        <!-- BUTTON -->
         <button
           type="submit"
           class="btn btn-gold btn-full"
@@ -134,8 +160,13 @@
 
       </form>
 
-      <div class="form-divider" style="margin-top:1.8rem;"></div>
+      <!-- DIVIDER -->
+      <div
+        class="form-divider"
+        style="margin-top:1.8rem;"
+      ></div>
 
+      <!-- DEMO -->
       <p class="form-extra">
 
         Acceso rapido de demostracion:
@@ -154,7 +185,10 @@
 
           <button
             class="btn btn-outline"
-            style="padding:8px 18px; font-size:0.72rem;"
+            style="
+              padding:8px 18px;
+              font-size:0.72rem;
+            "
             onclick="loginDemo('cliente')"
           >
             Cliente
@@ -162,7 +196,10 @@
 
           <button
             class="btn btn-outline"
-            style="padding:8px 18px; font-size:0.72rem;"
+            style="
+              padding:8px 18px;
+              font-size:0.72rem;
+            "
             onclick="loginDemo('barbero')"
           >
             Barbero
@@ -170,7 +207,10 @@
 
           <button
             class="btn btn-outline"
-            style="padding:8px 18px; font-size:0.72rem;"
+            style="
+              padding:8px 18px;
+              font-size:0.72rem;
+            "
             onclick="loginDemo('admin')"
           >
             Admin
@@ -182,6 +222,7 @@
 
       <div class="form-divider"></div>
 
+      <!-- REGISTER -->
       <p class="form-extra">
 
         No tienes cuenta?
@@ -196,154 +237,206 @@
 
   </main>
 
+  <!-- SCRIPT -->
   <script>
 
-    const msgEl = document.getElementById('demo-msg');
+    window.onload = function () {
 
-    function showMsg(texto, tipo) {
+      const msgEl =
+        document.getElementById('demo-msg');
 
-      msgEl.className =
-        'alert ' +
-        (tipo === 'ok'
-          ? 'alert-success'
-          : 'alert-error');
+      // MENSAJES
+      function showMsg(texto, tipo) {
 
-      msgEl.textContent = texto;
+        msgEl.className =
+          'alert ' +
+          (
+            tipo === 'ok'
+            ? 'alert-success'
+            : 'alert-error'
+          );
 
-      msgEl.style.display = 'block';
-    }
+        msgEl.textContent = texto;
 
-    // Usuarios demo
-    const demoUsers = {
-
-      cliente: {
-        nombre: 'Juan',
-        apellido: 'Garcia',
-        correo: 'juan@demo.com',
-        telefono: '+57 300 000 0001',
-        rol: 'cliente'
-      },
-
-      barbero: {
-        nombre: 'Carlos',
-        apellido: 'Rodriguez',
-        correo: 'carlos@demo.com',
-        telefono: '+57 300 000 0002',
-        rol: 'barbero'
-      },
-
-      admin: {
-        nombre: 'Admin',
-        apellido: 'BarberSlot',
-        correo: 'admin@demo.com',
-        telefono: '+57 300 000 0003',
-        rol: 'admin'
+        msgEl.style.display = 'block';
       }
-    };
 
-    // Destinos
-    const destinos = {
+      // USUARIOS DEMO
+      const demoUsers = {
 
-      cliente: 'cliente/dashboard.html',
+        cliente: {
 
-      barbero: 'barbero/dashboard.html',
+          nombre: 'Juan',
 
-      admin: 'admin/dashboard.html'
-    };
+          apellido: 'Garcia',
 
-    // LOGIN DEMO
-    function loginDemo(rol) {
+          correo: 'juan@demo.com',
 
-      const usuario = demoUsers[rol];
+          telefono: '+57 300 000 0001',
 
-      localStorage.setItem(
-        'bs_sesion',
-        JSON.stringify(usuario)
-      );
+          rol: 'cliente'
+        },
 
-      if (!localStorage.getItem('bs_citas')) {
+        barbero: {
+
+          nombre: 'Carlos',
+
+          apellido: 'Rodriguez',
+
+          correo: 'carlos@demo.com',
+
+          telefono: '+57 300 000 0002',
+
+          rol: 'barbero'
+        },
+
+        admin: {
+
+          nombre: 'Admin',
+
+          apellido: 'BarberSlot',
+
+          correo: 'admin@demo.com',
+
+          telefono: '+57 300 000 0003',
+
+          rol: 'admin'
+        }
+      };
+
+      // DESTINOS
+      const destinos = {
+
+        cliente: 'cliente/dashboard.html',
+
+        barbero: 'barbero/dashboard.html',
+
+        admin: 'admin/dashboard.html'
+      };
+
+      // LOGIN DEMO
+      window.loginDemo = function(rol) {
+
+        const usuario = demoUsers[rol];
 
         localStorage.setItem(
-          'bs_citas',
-          JSON.stringify([])
+          'bs_sesion',
+          JSON.stringify(usuario)
         );
-      }
 
-      showMsg(
-        'Acceso como ' +
-        usuario.nombre +
-        '. Redirigiendo...',
-        'ok'
-      );
+        if (!localStorage.getItem('bs_citas')) {
 
-      setTimeout(() => {
-
-        window.location.href = destinos[rol];
-
-      }, 1200);
-    }
-
-    // LOGIN NORMAL
-    const form = document.getElementById('loginForm');
-
-    form.addEventListener('submit', function(e) {
-
-      e.preventDefault();
-
-      const email =
-        document.getElementById('email')
-        .value
-        .trim();
-
-      const password =
-        document.getElementById('password')
-        .value
-        .trim();
-
-      // Obtener usuarios
-      const usuarios = JSON.parse(
-        localStorage.getItem('bs_usuarios')
-      ) || [];
-
-      // Buscar usuario
-      const usuario = usuarios.find(u =>
-
-        u.correo === email &&
-        u.pass === password
-      );
-
-      // Validacion
-      if (!usuario) {
+          localStorage.setItem(
+            'bs_citas',
+            JSON.stringify([])
+          );
+        }
 
         showMsg(
-          'Correo o contrasena incorrectos',
-          'err'
+          'Acceso como ' +
+          usuario.nombre,
+          'ok'
+        );
+
+        setTimeout(() => {
+
+          window.location.href =
+            destinos[rol];
+
+        }, 1200);
+      };
+
+      // FORM
+      const form =
+        document.getElementById('loginForm');
+
+      if (!form) {
+
+        console.error(
+          'No existe loginForm'
         );
 
         return;
       }
 
-      // Guardar sesion
-      localStorage.setItem(
-        'bs_sesion',
-        JSON.stringify(usuario)
+      // LOGIN
+      form.addEventListener(
+        'submit',
+        function(e) {
+
+          e.preventDefault();
+
+          const email =
+            document
+            .getElementById('email')
+            .value
+            .trim();
+
+          const password =
+            document
+            .getElementById('password')
+            .value
+            .trim();
+
+          // USUARIOS
+          const usuarios = JSON.parse(
+
+            localStorage.getItem(
+              'bs_usuarios'
+            )
+
+          ) || [];
+
+          // BUSCAR USUARIO
+          const usuario = usuarios.find(
+
+            u =>
+
+            u.correo === email &&
+
+            u.pass === password
+          );
+
+          // VALIDACION
+          if (!usuario) {
+
+            showMsg(
+              'Correo o contrasena incorrectos',
+              'err'
+            );
+
+            return;
+          }
+
+          // GUARDAR SESION
+          localStorage.setItem(
+
+            'bs_sesion',
+
+            JSON.stringify(usuario)
+          );
+
+          showMsg(
+            'Bienvenido ' +
+            usuario.nombre,
+            'ok'
+          );
+
+          // REDIRECCION
+          setTimeout(() => {
+
+            window.location.href =
+
+              destinos[usuario.rol] ||
+
+              'cliente/dashboard.html';
+
+          }, 1200);
+
+        }
       );
 
-      showMsg(
-        'Bienvenido ' + usuario.nombre,
-        'ok'
-      );
-
-      // Redireccion
-      setTimeout(() => {
-
-        window.location.href =
-          destinos[usuario.rol] ||
-          'cliente/dashboard.html';
-
-      }, 1200);
-
-    });
+    };
 
   </script>
 
