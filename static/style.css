@@ -1082,3 +1082,74 @@ select option{
   background:#111;
   color:white;
 }
+/* ============================================================
+   FIX DASHBOARD
+   ============================================================ */
+
+.dashboard-welcome{
+  margin-bottom:40px;
+}
+
+.dashboard-welcome h1{
+  font-family: var(--serif);
+  font-size: 3rem;
+  color: var(--white);
+  margin-top: 8px;
+}
+
+.dashboard-welcome span{
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.dashboard-section{
+  margin-top: 48px;
+}
+
+.dashboard-section-title{
+  font-size: 1.4rem;
+  margin-bottom: 24px;
+  color: var(--white);
+}
+
+.quick-actions{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-top:24px;
+}
+
+.empty-card{
+  background: var(--black-card);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius);
+  padding: 32px;
+  text-align:center;
+}
+
+.empty-card p{
+  color: var(--white-dim);
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+  .dashboard-welcome h1{
+    font-size:2.2rem;
+  }
+
+  .metrics-grid{
+    grid-template-columns:1fr;
+  }
+
+  .barber-grid{
+    grid-template-columns:1fr;
+  }
+
+}
