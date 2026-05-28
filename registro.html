@@ -10,6 +10,7 @@
 
   <header class="header">
     <a href="index.html" class="logo">Barber<span>Slot</span></a>
+
     <nav class="navbar">
       <a href="index.html">Inicio</a>
       <a href="login.html">Iniciar Sesion</a>
@@ -17,56 +18,106 @@
   </header>
 
   <main class="form-page">
+
     <div class="form-card">
 
       <div class="form-logo">BarberSlot</div>
-      <p class="form-subtitle">Crea tu cuenta y agenda tu primera cita hoy</p>
+
+      <p class="form-subtitle">
+        Crea tu cuenta y agenda tu primera cita hoy
+      </p>
 
       <div class="form-divider"></div>
 
       <div class="alert alert-success" id="success-msg" style="display:none;">
-        Cuenta creada correctamente. Redirigiendo a tu panel...
+        Cuenta creada correctamente
       </div>
+
       <div class="alert alert-error" id="error-msg" style="display:none;"></div>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
-        <div class="field">
-          <label for="nombre">Nombre</label>
-          <input type="text" id="nombre" placeholder="Juan" autocomplete="given-name">
+      <!-- FORMULARIO -->
+      <form id="registroForm">
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+
+          <div class="field">
+            <label for="nombre">Nombre</label>
+            <input
+              type="text"
+              id="nombre"
+              placeholder="Juan"
+              autocomplete="given-name"
+              required
+            >
+          </div>
+
+          <div class="field">
+            <label for="apellido">Apellido</label>
+            <input
+              type="text"
+              id="apellido"
+              placeholder="Garcia"
+              autocomplete="family-name"
+              required
+            >
+          </div>
+
         </div>
+
         <div class="field">
-          <label for="apellido">Apellido</label>
-          <input type="text" id="apellido" placeholder="Garcia" autocomplete="family-name">
+          <label for="correo">Correo Electronico</label>
+
+          <input
+            type="email"
+            id="correo"
+            placeholder="juan@correo.com"
+            autocomplete="email"
+            required
+          >
         </div>
-      </div>
 
-      <div class="field">
-        <label for="correo">Correo Electronico</label>
-        <input type="email" id="correo" placeholder="juan@correo.com" autocomplete="email">
-      </div>
+        <div class="field">
+          <label for="telefono">Telefono</label>
 
-      <div class="field">
-        <label for="telefono">Telefono</label>
-        <input type="tel" id="telefono" placeholder="+57 300 000 0000" autocomplete="tel">
-      </div>
+          <input
+            type="tel"
+            id="telefono"
+            placeholder="+57 300 000 0000"
+            autocomplete="tel"
+            required
+          >
+        </div>
 
-      <div class="field">
-        <label for="pass">Contrasena</label>
-        <input type="password" id="pass" placeholder="Minimo 8 caracteres" autocomplete="new-password">
-      </div>
+        <div class="field">
+          <label for="pass">Contrasena</label>
 
-      <div style="font-size: 0.78rem; color: var(--white-dim); margin-bottom: 1.4rem; line-height: 1.6;">
-        Al registrarte aceptas nuestros
-        <a href="#" style="color: var(--gold);">Terminos de Servicio</a>
-        y
-        <a href="#" style="color: var(--gold);">Politica de Privacidad</a>.
-      </div>
+          <input
+            type="password"
+            id="pass"
+            placeholder="Minimo 8 caracteres"
+            autocomplete="new-password"
+            required
+          >
+        </div>
 
-      <button class="btn btn-gold btn-full" id="btn-registro">
-        Crear Cuenta
-      </button>
+        <div style="font-size:0.78rem; color:var(--white-dim); margin-bottom:1.4rem; line-height:1.6;">
+          Al registrarte aceptas nuestros
+          <a href="#" style="color:var(--gold);">
+            Terminos de Servicio
+          </a>
+          y
+          <a href="#" style="color:var(--gold);">
+            Politica de Privacidad
+          </a>.
+        </div>
 
-      <div class="form-divider" style="margin-top: 1.8rem;"></div>
+        <button type="submit" class="btn btn-gold btn-full">
+          Crear Cuenta
+        </button>
+
+      </form>
+
+      <div class="form-divider" style="margin-top:1.8rem;"></div>
 
       <p class="form-extra">
         Ya tienes cuenta?
@@ -74,44 +125,66 @@
       </p>
 
     </div>
+
   </main>
 
   <script>
-    document.getElementById('btn-registro').addEventListener('click', () => {
-      const nombre   = document.getElementById('nombre').value.trim();
-      const apellido = document.getElementById('apellido').value.trim();
-      const correo   = document.getElementById('correo').value.trim();
-      const telefono = document.getElementById('telefono').value.trim();
-      const pass     = document.getElementById('pass').value.trim();
-      const errEl    = document.getElementById('error-msg');
-      const okEl     = document.getElementById('success-msg');
 
-      errEl.style.display = 'none';
-      okEl.style.display  = 'none';
+    const form = document.getElementById('registroForm');
 
-      if (!nombre || !apellido || !correo || !pass) {
-        errEl.textContent = 'Por favor completa todos los campos requeridos.';
-        errEl.style.display = 'block';
+    form.addEventListener('submit', function(e) {
+
+      e.preventDefault();
+
+      const nombre = document.getElementById('nombre').value;
+      const apellido = document.getElementById('apellido').value;
+      const correo = document.getElementById('correo').value;
+      const telefono = document.getElementById('telefono').value;
+      const pass = document.getElementById('pass').value;
+
+      // Obtener usuarios guardados
+      let usuarios = JSON.parse(
+        localStorage.getItem('bs_usuarios')
+      ) || [];
+
+      // Verificar si el correo ya existe
+      const existe = usuarios.find(
+        usuario => usuario.correo === correo
+      );
+
+      if (existe) {
+
+        alert('Este correo ya esta registrado');
+
         return;
       }
 
-      if (pass.length < 8) {
-        errEl.textContent = 'La contrasena debe tener al menos 8 caracteres.';
-        errEl.style.display = 'block';
-        return;
-      }
+      // Crear usuario
+      const usuario = {
 
-      // Guardar datos del usuario en localStorage
-      const usuario = { nombre, apellido, correo, telefono, rol: 'cliente' };
-      localStorage.setItem('bs_usuario', JSON.stringify(usuario));
-      // Inicializar lista de citas vacia si no existe
-      if (!localStorage.getItem('bs_citas')) {
-        localStorage.setItem('bs_citas', JSON.stringify([]));
-      }
+        nombre,
+        apellido,
+        correo,
+        telefono,
+        pass,
+        rol: 'cliente'
+      };
 
-      okEl.style.display = 'block';
-      setTimeout(() => { window.location.href = 'cliente/dashboard.html'; }, 1500);
+      // Guardar usuario
+      usuarios.push(usuario);
+
+      localStorage.setItem(
+        'bs_usuarios',
+        JSON.stringify(usuarios)
+      );
+
+      alert('Registro exitoso');
+
+      // Redireccion
+      window.location.href = 'login.html';
+
     });
+
   </script>
 
 </body>

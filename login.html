@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar Sesion — BarberSlot</title>
+
+  <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+
+  <header class="header">
+
+    <a href="index.html" class="logo">
+      Barber<span>Slot</span>
+    </a>
+
+    <nav class="navbar">
+      <a href="index.html">Inicio</a>
+
+      <a href="registro.html" class="btn-nav">
+        Crear Cuenta
+      </a>
+    </nav>
+
+  </header>
+
+  <main class="form-page">
+
+    <div class="form-card">
+
+      <div class="form-logo">BarberSlot</div>
+
+      <p class="form-subtitle">
+        Accede a tu cuenta para gestionar tus citas
+      </p>
+
+      <div class="form-divider"></div>
+
+      <div
+        class="alert alert-success"
+        id="demo-msg"
+        style="display:none;"
+      ></div>
+
+      <!-- FORMULARIO -->
+      <form id="loginForm">
+
+        <div class="field">
+
+          <label for="email">
+            Correo Electronico
+          </label>
+
+          <input
+            type="email"
+            id="email"
+            placeholder="nombre@correo.com"
+            autocomplete="email"
+            required
+          >
+
+        </div>
+
+        <div class="field">
+
+          <label for="password">
+            Contrasena
+          </label>
+
+          <input
+            type="password"
+            id="password"
+            placeholder="••••••••"
+            autocomplete="current-password"
+            required
+          >
+
+        </div>
+
+        <div
+          style="
+            margin-bottom:1.6rem;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            font-size:0.8rem;
+            color:var(--white-dim);
+          "
+        >
+
+          <label
+            style="
+              display:flex;
+              align-items:center;
+              gap:8px;
+              cursor:pointer;
+              text-transform:none;
+              font-weight:400;
+              letter-spacing:0;
+            "
+          >
+
+            <input
+              type="checkbox"
+              id="remember"
+              style="
+                width:auto;
+                padding:0;
+                margin:0;
+                accent-color:var(--gold);
+              "
+            >
+
+            Recordarme
+
+          </label>
+
+          <a
+            href="#"
+            style="color:var(--gold); font-size:0.8rem;"
+          >
+            Olvide mi contrasena
+          </a>
+
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-gold btn-full"
+        >
+          Ingresar
+        </button>
+
+      </form>
+
+      <div class="form-divider" style="margin-top:1.8rem;"></div>
+
+      <p class="form-extra">
+
+        Acceso rapido de demostracion:
+
+        <br>
+
+        <span
+          style="
+            margin-top:12px;
+            display:flex;
+            gap:10px;
+            justify-content:center;
+            flex-wrap:wrap;
+          "
+        >
+
+          <button
+            class="btn btn-outline"
+            style="padding:8px 18px; font-size:0.72rem;"
+            onclick="loginDemo('cliente')"
+          >
+            Cliente
+          </button>
+
+          <button
+            class="btn btn-outline"
+            style="padding:8px 18px; font-size:0.72rem;"
+            onclick="loginDemo('barbero')"
+          >
+            Barbero
+          </button>
+
+          <button
+            class="btn btn-outline"
+            style="padding:8px 18px; font-size:0.72rem;"
+            onclick="loginDemo('admin')"
+          >
+            Admin
+          </button>
+
+        </span>
+
+      </p>
+
+      <div class="form-divider"></div>
+
+      <p class="form-extra">
+
+        No tienes cuenta?
+
+        <a href="registro.html">
+          Registrate gratis
+        </a>
+
+      </p>
+
+    </div>
+
+  </main>
+
+  <script>
+
+    const msgEl = document.getElementById('demo-msg');
+
+    function showMsg(texto, tipo) {
+
+      msgEl.className =
+        'alert ' +
+        (tipo === 'ok'
+          ? 'alert-success'
+          : 'alert-error');
+
+      msgEl.textContent = texto;
+
+      msgEl.style.display = 'block';
+    }
+
+    // Usuarios demo
+    const demoUsers = {
+
+      cliente: {
+        nombre: 'Juan',
+        apellido: 'Garcia',
+        correo: 'juan@demo.com',
+        telefono: '+57 300 000 0001',
+        rol: 'cliente'
+      },
+
+      barbero: {
+        nombre: 'Carlos',
+        apellido: 'Rodriguez',
+        correo: 'carlos@demo.com',
+        telefono: '+57 300 000 0002',
+        rol: 'barbero'
+      },
+
+      admin: {
+        nombre: 'Admin',
+        apellido: 'BarberSlot',
+        correo: 'admin@demo.com',
+        telefono: '+57 300 000 0003',
+        rol: 'admin'
+      }
+    };
+
+    // Destinos
+    const destinos = {
+
+      cliente: 'cliente/dashboard.html',
+
+      barbero: 'barbero/dashboard.html',
+
+      admin: 'admin/dashboard.html'
+    };
+
+    // LOGIN DEMO
+    function loginDemo(rol) {
+
+      const usuario = demoUsers[rol];
+
+      localStorage.setItem(
+        'bs_sesion',
+        JSON.stringify(usuario)
+      );
+
+      if (!localStorage.getItem('bs_citas')) {
+
+        localStorage.setItem(
+          'bs_citas',
+          JSON.stringify([])
+        );
+      }
+
+      showMsg(
+        'Acceso como ' +
+        usuario.nombre +
+        '. Redirigiendo...',
+        'ok'
+      );
+
+      setTimeout(() => {
+
+        window.location.href = destinos[rol];
+
+      }, 1200);
+    }
+
+    // LOGIN NORMAL
+    const form = document.getElementById('loginForm');
+
+    form.addEventListener('submit', function(e) {
+
+      e.preventDefault();
+
+      const email =
+        document.getElementById('email')
+        .value
+        .trim();
+
+      const password =
+        document.getElementById('password')
+        .value
+        .trim();
+
+      // Obtener usuarios
+      const usuarios = JSON.parse(
+        localStorage.getItem('bs_usuarios')
+      ) || [];
+
+      // Buscar usuario
+      const usuario = usuarios.find(u =>
+
+        u.correo === email &&
+        u.pass === password
+      );
+
+      // Validacion
+      if (!usuario) {
+
+        showMsg(
+          'Correo o contrasena incorrectos',
+          'err'
+        );
+
+        return;
+      }
+
+      // Guardar sesion
+      localStorage.setItem(
+        'bs_sesion',
+        JSON.stringify(usuario)
+      );
+
+      showMsg(
+        'Bienvenido ' + usuario.nombre,
+        'ok'
+      );
+
+      // Redireccion
+      setTimeout(() => {
+
+        window.location.href =
+          destinos[usuario.rol] ||
+          'cliente/dashboard.html';
+
+      }, 1200);
+
+    });
+
+  </script>
+
+</body>
+</html>
