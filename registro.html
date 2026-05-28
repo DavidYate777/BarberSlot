@@ -81,6 +81,7 @@
       const nombre   = document.getElementById('nombre').value.trim();
       const apellido = document.getElementById('apellido').value.trim();
       const correo   = document.getElementById('correo').value.trim();
+      const telefono = document.getElementById('telefono').value.trim();
       const pass     = document.getElementById('pass').value.trim();
       const errEl    = document.getElementById('error-msg');
       const okEl     = document.getElementById('success-msg');
@@ -98,6 +99,14 @@
         errEl.textContent = 'La contrasena debe tener al menos 8 caracteres.';
         errEl.style.display = 'block';
         return;
+      }
+
+      // Guardar datos del usuario en localStorage
+      const usuario = { nombre, apellido, correo, telefono, rol: 'cliente' };
+      localStorage.setItem('bs_usuario', JSON.stringify(usuario));
+      // Inicializar lista de citas vacia si no existe
+      if (!localStorage.getItem('bs_citas')) {
+        localStorage.setItem('bs_citas', JSON.stringify([]));
       }
 
       okEl.style.display = 'block';

@@ -12,7 +12,7 @@
     <a href="../index.html" class="logo">Barber<span>Slot</span></a>
     <nav class="navbar">
       <a href="dashboard.html">Mi Panel</a>
-      <a href="../login.html">Cerrar Sesion</a>
+      <a href="../login.html" id="btn-logout-header">Cerrar Sesion</a>
     </nav>
   </header>
 
@@ -47,7 +47,7 @@
       </a>
 
       <span class="sidebar-section-label">Sesion</span>
-      <a href="../login.html" class="sidebar-link danger">
+      <a href="../login.html" class="sidebar-link danger" id="btn-logout">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
           <polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
@@ -104,7 +104,7 @@
             </div>
             <div class="field">
               <label for="hora">Hora</label>
-              <input type="time" id="hora" min="08:00" max="20:00">
+              <input type="time" id="hora" min="08:00" max="20:00" step="1800">
             </div>
           </div>
 
@@ -166,11 +166,21 @@
   </div>
 
   <script>
-    // Precios por servicio
-    const precios = { '1': '$25.000', '2': '$35.000', '3': '$45.000', '4': '$20.000', '5': '$30.000' };
-    const barbNames = { '1': 'Carlos Rodriguez', '2': 'Miguel Torres', '4': 'Sebastian Ruiz' };
-    const servNames = { '1': 'Corte Clasico', '2': 'Degradado Premium', '3': 'Corte + Barba', '4': 'Afeitado Tradicional', '5': 'Tratamiento Capilar' };
+    const precios    = { '1':'$25.000', '2':'$35.000', '3':'$45.000', '4':'$20.000', '5':'$30.000' };
+    const barbNames  = { '1':'Carlos Rodriguez', '2':'Miguel Torres', '4':'Sebastian Ruiz' };
+    const servNames  = { '1':'Corte Clasico', '2':'Degradado Premium', '3':'Corte + Barba', '4':'Afeitado Tradicional', '5':'Tratamiento Capilar' };
+    const MESES      = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 
+    // Cerrar sesion
+    ['btn-logout', 'btn-logout-header'].forEach(id => {
+      document.getElementById(id).addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.removeItem('bs_usuario');
+        window.location.href = '../login.html';
+      });
+    });
+
+    // Actualizar resumen en tiempo real
     function updateSummary() {
       const b = document.getElementById('barbero').value;
       const s = document.getElementById('servicio').value;
@@ -179,31 +189,40 @@
 
       document.getElementById('sum-barbero').textContent  = b ? barbNames[b]  : '—';
       document.getElementById('sum-servicio').textContent = s ? servNames[s]  : '—';
-      document.getElementById('sum-fecha').textContent    = f || '—';
-      document.getElementById('sum-hora').textContent     = h || '—';
-      document.getElementById('sum-precio').textContent   = s ? precios[s]   : '—';
+      document.getElementById('sum-precio').textContent   = s ? precios[s]    : '—';
+
+      if (f) {
+        const d = new Date(f + 'T00:00:00');
+        document.getElementById('sum-fecha').textContent = d.getDate() + ' ' + MESES[d.getMonth()] + ' ' + d.getFullYear();
+      } else {
+        document.getElementById('sum-fecha').textContent = '—';
+      }
+
+      document.getElementById('sum-hora').textContent = h || '—';
     }
 
     ['barbero','servicio','fecha','hora'].forEach(id => {
       document.getElementById(id).addEventListener('change', updateSummary);
     });
 
-    // Set min date to today
+    // Fecha minima = hoy
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('fecha').setAttribute('min', today);
 
-    // Pre-select barbero from URL param
+    // Pre-seleccionar barbero desde URL
     const params = new URLSearchParams(window.location.search);
     if (params.get('barbero')) {
       document.getElementById('barbero').value = params.get('barbero');
       updateSummary();
     }
 
+    // Confirmar cita
     document.getElementById('btn-agendar').addEventListener('click', () => {
-      const b = document.getElementById('barbero').value;
-      const s = document.getElementById('servicio').value;
-      const f = document.getElementById('fecha').value;
-      const h = document.getElementById('hora').value;
+      const b   = document.getElementById('barbero').value;
+      const s   = document.getElementById('servicio').value;
+      const f   = document.getElementById('fecha').value;
+      const h   = document.getElementById('hora').value;
+      const n   = document.getElementById('notas').value.trim();
       const err = document.getElementById('err-msg');
       const ok  = document.getElementById('ok-msg');
 
@@ -215,6 +234,25 @@
         err.style.display = 'block';
         return;
       }
+
+      // Construir objeto cita
+      const nuevaCita = {
+        id:            Date.now(),
+        barberoId:     b,
+        barberoNombre: barbNames[b],
+        servicioId:    s,
+        servicioNombre:servNames[s],
+        precio:        precios[s],
+        fecha:         f,
+        hora:          h,
+        notas:         n,
+        estado:        'confirmada'
+      };
+
+      // Guardar en localStorage
+      const citas = JSON.parse(localStorage.getItem('bs_citas') || '[]');
+      citas.push(nuevaCita);
+      localStorage.setItem('bs_citas', JSON.stringify(citas));
 
       ok.style.display = 'block';
       setTimeout(() => { window.location.href = 'dashboard.html'; }, 1400);

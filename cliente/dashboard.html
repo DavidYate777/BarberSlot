@@ -50,7 +50,7 @@
 
       <span class="sidebar-section-label">Sesion</span>
 
-      <a href="../login.html" class="sidebar-link danger">
+      <a href="../login.html" class="sidebar-link danger" id="btn-logout">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
           <polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
@@ -64,25 +64,25 @@
 
       <div class="page-header">
         <p class="section-label">Bienvenido de vuelta</p>
-        <h1>Juan Garcia</h1>
+        <h1 id="nombre-usuario">Cargando...</h1>
       </div>
 
       <!-- METRICS -->
       <div class="metrics-grid">
         <div class="metric-card">
           <span class="metric-label">Citas Totales</span>
-          <span class="metric-value">12</span>
+          <span class="metric-value" id="metric-total">0</span>
           <span class="metric-sub">Desde tu registro</span>
         </div>
         <div class="metric-card">
           <span class="metric-label">Proxima Cita</span>
-          <span class="metric-value" style="font-size: 1.6rem;">15 Jun</span>
-          <span class="metric-sub">10:00 AM — Carlos R.</span>
+          <span class="metric-value" style="font-size: 1.6rem;" id="metric-proxima">—</span>
+          <span class="metric-sub" id="metric-proxima-sub">Sin citas agendadas</span>
         </div>
         <div class="metric-card">
           <span class="metric-label">Barbero Favorito</span>
-          <span class="metric-value" style="font-size: 1.4rem;">Carlos R.</span>
-          <span class="metric-sub">4 visitas</span>
+          <span class="metric-value" style="font-size: 1.4rem;" id="metric-barbero">—</span>
+          <span class="metric-sub" id="metric-barbero-sub">Sin visitas aun</span>
         </div>
       </div>
 
@@ -95,36 +95,8 @@
           </a>
         </div>
 
-        <div class="appt-card">
-          <div class="appt-date">
-            <span class="day">15</span>
-            <span class="mon">Jun</span>
-          </div>
-          <div class="appt-info">
-            <strong>Degradado Premium</strong>
-            <small>Con Carlos Rodriguez &mdash; Sede Principal</small>
-          </div>
-          <div class="appt-time">
-            <strong>10:00</strong>
-            <span>Confirmada</span>
-          </div>
-          <span class="badge badge-active" style="margin-left: 12px;">Activa</span>
-        </div>
-
-        <div class="appt-card">
-          <div class="appt-date">
-            <span class="day">28</span>
-            <span class="mon">Jun</span>
-          </div>
-          <div class="appt-info">
-            <strong>Corte Clasico + Barba</strong>
-            <small>Con Miguel Torres &mdash; Sede Principal</small>
-          </div>
-          <div class="appt-time">
-            <strong>14:30</strong>
-            <span>Confirmada</span>
-          </div>
-          <span class="badge badge-pending" style="margin-left: 12px;">Pendiente</span>
+        <div id="lista-citas">
+          <!-- Las citas se renderizan desde JS -->
         </div>
       </div>
 
@@ -179,6 +151,102 @@
 
     </main>
   </div>
+
+  <script>
+    const MESES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
+    // ── Cargar usuario ──────────────────────────────────────────
+    const usuarioRaw = localStorage.getItem('bs_usuario');
+    if (usuarioRaw) {
+      const u = JSON.parse(usuarioRaw);
+      document.getElementById('nombre-usuario').textContent = u.nombre + ' ' + u.apellido;
+    } else {
+      document.getElementById('nombre-usuario').textContent = 'Invitado';
+    }
+
+    // ── Cerrar sesion ───────────────────────────────────────────
+    document.getElementById('btn-logout').addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('bs_usuario');
+      window.location.href = '../login.html';
+    });
+
+    // ── Cargar citas ────────────────────────────────────────────
+    const citas = JSON.parse(localStorage.getItem('bs_citas') || '[]');
+
+    // Ordenar por fecha
+    citas.sort((a, b) => new Date(a.fecha + 'T' + a.hora) - new Date(b.fecha + 'T' + b.hora));
+
+    // Filtrar futuras y pasadas
+    const ahora = new Date();
+    const futuras = citas.filter(c => new Date(c.fecha + 'T' + c.hora) >= ahora);
+    const pasadas = citas.filter(c => new Date(c.fecha + 'T' + c.hora) < ahora);
+
+    // ── Metricas ────────────────────────────────────────────────
+    document.getElementById('metric-total').textContent = citas.length;
+
+    if (futuras.length > 0) {
+      const proxima = futuras[0];
+      const d = new Date(proxima.fecha + 'T00:00:00');
+      document.getElementById('metric-proxima').textContent = d.getDate() + ' ' + MESES[d.getMonth()];
+      document.getElementById('metric-proxima-sub').textContent = proxima.hora + ' — ' + proxima.barberoNombre;
+    }
+
+    // Barbero favorito (el que mas aparece)
+    if (citas.length > 0) {
+      const conteo = {};
+      citas.forEach(c => { conteo[c.barberoNombre] = (conteo[c.barberoNombre] || 0) + 1; });
+      const favorito = Object.entries(conteo).sort((a, b) => b[1] - a[1])[0];
+      document.getElementById('metric-barbero').textContent = favorito[0].split(' ')[0] + ' ' + favorito[0].split(' ')[1][0] + '.';
+      document.getElementById('metric-barbero-sub').textContent = favorito[1] + ' visita' + (favorito[1] > 1 ? 's' : '');
+    }
+
+    // ── Renderizar lista de citas ───────────────────────────────
+    const lista = document.getElementById('lista-citas');
+
+    function renderCita(cita, esPasada) {
+      const d = new Date(cita.fecha + 'T00:00:00');
+      const dia  = d.getDate();
+      const mes  = MESES[d.getMonth()];
+      const badge = esPasada
+        ? '<span class="badge badge-inactive" style="margin-left:12px;">Completada</span>'
+        : '<span class="badge badge-active" style="margin-left:12px;">Activa</span>';
+      const estado = esPasada ? 'Completada' : 'Confirmada';
+
+      return `
+        <div class="appt-card">
+          <div class="appt-date">
+            <span class="day">${dia}</span>
+            <span class="mon">${mes}</span>
+          </div>
+          <div class="appt-info">
+            <strong>${cita.servicioNombre}</strong>
+            <small>Con ${cita.barberoNombre} &mdash; Sede Principal</small>
+          </div>
+          <div class="appt-time">
+            <strong>${cita.hora}</strong>
+            <span>${estado}</span>
+          </div>
+          ${badge}
+        </div>`;
+    }
+
+    if (futuras.length === 0 && pasadas.length === 0) {
+      lista.innerHTML = `
+        <div style="text-align:center; padding: 48px 24px; background: var(--black-elev); border: 1px solid rgba(255,255,255,0.07); border-radius: var(--radius);">
+          <p style="color: var(--white-dim); font-size: 0.9rem; margin-bottom: 20px;">No tienes citas agendadas aun.</p>
+          <a href="agendar.html" class="btn btn-gold" style="font-size: 0.8rem; padding: 10px 24px;">Agendar mi primera cita</a>
+        </div>`;
+    } else {
+      let html = '';
+      futuras.forEach(c => { html += renderCita(c, false); });
+      if (pasadas.length > 0) {
+        html += `<p style="font-size:0.75rem; color:var(--white-dim); letter-spacing:0.1em; text-transform:uppercase; margin: 24px 0 12px;">Historial</p>`;
+        pasadas.slice().reverse().forEach(c => { html += renderCita(c, true); });
+      }
+      lista.innerHTML = html;
+    }
+  </script>
 
 </body>
 </html>
