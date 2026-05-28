@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrar Barbero — BarberSlot</title>
+  <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+
+  <header class="header">
+    <a href="../index.html" class="logo">Barber<span>Slot</span></a>
+    <nav class="navbar">
+      <span style="font-size: 0.75rem; color: var(--gold); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">Administrador</span>
+    </nav>
+  </header>
+
+  <div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <span class="sidebar-logo">Admin Panel</span>
+      <span class="sidebar-section-label">Gestion</span>
+
+      <a href="dashboard.html" class="sidebar-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        Panel Principal
+      </a>
+
+      <a href="registrar_barbero.html" class="sidebar-link active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/>
+          <line x1="22" y1="11" x2="16" y2="11"/>
+        </svg>
+        Registrar Barbero
+      </a>
+
+      <a href="#" class="sidebar-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
+          <line x1="6" y1="20" x2="6" y2="14"/>
+        </svg>
+        Reportes
+      </a>
+
+      <a href="#" class="sidebar-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        Clientes
+      </a>
+
+      <span class="sidebar-section-label">Sistema</span>
+
+      <a href="#" class="sidebar-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
+        </svg>
+        Configuracion
+      </a>
+
+      <a href="../login.html" class="sidebar-link danger">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        Cerrar Sesion
+      </a>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+      <div class="page-header">
+        <p class="section-label">Administracion</p>
+        <h1>Registrar Barbero</h1>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 360px; gap: 28px; align-items: start;">
+
+        <!-- FORMULARIO -->
+        <div class="card">
+          <h3 style="font-size: 0.9rem; font-weight: 600; color: var(--gold); margin-bottom: 24px; letter-spacing: 0.06em; text-transform: uppercase;">Datos del Profesional</h3>
+
+          <div class="alert alert-success" id="ok-msg" style="display:none;">
+            Barbero registrado correctamente. Redirigiendo al panel...
+          </div>
+          <div class="alert alert-error" id="err-msg" style="display:none;"></div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div class="field">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" placeholder="Carlos">
+            </div>
+            <div class="field">
+              <label for="apellido">Apellido</label>
+              <input type="text" id="apellido" placeholder="Rodriguez">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="correo">Correo Electronico</label>
+            <input type="email" id="correo" placeholder="carlos@barbershop.com">
+          </div>
+
+          <div class="field">
+            <label for="telefono">Telefono</label>
+            <input type="tel" id="telefono" placeholder="+57 300 000 0000">
+          </div>
+
+          <div class="field">
+            <label for="especialidad">Especialidad</label>
+            <select id="especialidad">
+              <option value="">Selecciona una especialidad</option>
+              <option value="degradados">Degradados & Fade</option>
+              <option value="clasico">Corte Clasico & Barba</option>
+              <option value="modernos">Estilos Modernos</option>
+              <option value="lineas">Lineas & Disenos</option>
+              <option value="color">Tinturado & Color</option>
+              <option value="tratamientos">Tratamientos Capilares</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="experiencia">Anos de Experiencia</label>
+            <input type="number" id="experiencia" placeholder="Ej: 5" min="0" max="50">
+          </div>
+
+          <h3 style="font-size: 0.9rem; font-weight: 600; color: var(--gold); margin: 28px 0 18px; letter-spacing: 0.06em; text-transform: uppercase; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.07);">Horarios de Trabajo</h3>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 20px;">
+            <div class="field" style="margin-bottom: 0;">
+              <label>Dia Inicio</label>
+              <select id="dia-inicio">
+                <option value="lunes">Lunes</option>
+                <option value="martes">Martes</option>
+                <option value="miercoles">Miercoles</option>
+              </select>
+            </div>
+            <div class="field" style="margin-bottom: 0;">
+              <label>Hora Entrada</label>
+              <input type="time" id="hora-entrada" value="08:00">
+            </div>
+            <div class="field" style="margin-bottom: 0;">
+              <label>Hora Salida</label>
+              <input type="time" id="hora-salida" value="18:00">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="bio">Descripcion Profesional (opcional)</label>
+            <textarea id="bio" rows="3" style="resize: vertical;" placeholder="Especialista en cortes modernos con 5 anos de experiencia..."></textarea>
+          </div>
+
+          <h3 style="font-size: 0.9rem; font-weight: 600; color: var(--gold); margin: 28px 0 18px; letter-spacing: 0.06em; text-transform: uppercase; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.07);">Credenciales de Acceso</h3>
+
+          <div class="field">
+            <label for="pass">Contrasena Temporal</label>
+            <input type="password" id="pass" placeholder="Minimo 8 caracteres">
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-top: 8px;">
+            <button class="btn btn-gold" id="btn-registrar" style="flex: 1; justify-content: center;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Registrar Barbero
+            </button>
+            <a href="dashboard.html" class="btn btn-outline">
+              Cancelar
+            </a>
+          </div>
+        </div>
+
+        <!-- INFO LATERAL -->
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+
+          <div class="card" style="border-top: 2px solid var(--gold);">
+            <h4 style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px;">Equipo Actual</h4>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-weight: 700; color: var(--gold); font-size: 0.9rem;">CR</div>
+                <div>
+                  <p style="font-size: 0.85rem; font-weight: 500; color: var(--white);">Carlos Rodriguez</p>
+                  <p style="font-size: 0.75rem; color: var(--white-dim);">Degradados & Fade</p>
+                </div>
+                <span class="badge badge-active" style="margin-left: auto;">Activo</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-weight: 700; color: var(--gold); font-size: 0.9rem;">MT</div>
+                <div>
+                  <p style="font-size: 0.85rem; font-weight: 500; color: var(--white);">Miguel Torres</p>
+                  <p style="font-size: 0.75rem; color: var(--white-dim);">Corte Clasico & Barba</p>
+                </div>
+                <span class="badge badge-active" style="margin-left: auto;">Activo</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-weight: 700; color: var(--white-dim); font-size: 0.9rem;">AL</div>
+                <div>
+                  <p style="font-size: 0.85rem; font-weight: 500; color: var(--white);">Andres Lopez</p>
+                  <p style="font-size: 0.75rem; color: var(--white-dim);">Estilos Modernos</p>
+                </div>
+                <span class="badge badge-inactive" style="margin-left: auto;">Inactivo</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-weight: 700; color: var(--gold); font-size: 0.9rem;">SR</div>
+                <div>
+                  <p style="font-size: 0.85rem; font-weight: 500; color: var(--white);">Sebastian Ruiz</p>
+                  <p style="font-size: 0.75rem; color: var(--white-dim);">Lineas & Disenos</p>
+                </div>
+                <span class="badge badge-active" style="margin-left: auto;">Activo</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="border-color: rgba(201,168,76,0.12);">
+            <h4 style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px;">Indicaciones</h4>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px;">
+              <li style="font-size: 0.82rem; color: var(--white-dim); display: flex; gap: 8px; align-items: flex-start;">
+                <span style="color: var(--gold); margin-top: 2px;">&#8212;</span>
+                El correo debe ser unico para cada barbero.
+              </li>
+              <li style="font-size: 0.82rem; color: var(--white-dim); display: flex; gap: 8px; align-items: flex-start;">
+                <span style="color: var(--gold); margin-top: 2px;">&#8212;</span>
+                La contrasena temporal debe ser cambiada en el primer inicio de sesion.
+              </li>
+              <li style="font-size: 0.82rem; color: var(--white-dim); display: flex; gap: 8px; align-items: flex-start;">
+                <span style="color: var(--gold); margin-top: 2px;">&#8212;</span>
+                Los horarios pueden ajustarse en cualquier momento desde el panel del barbero.
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    document.getElementById('btn-registrar').addEventListener('click', () => {
+      const nombre   = document.getElementById('nombre').value.trim();
+      const apellido = document.getElementById('apellido').value.trim();
+      const correo   = document.getElementById('correo').value.trim();
+      const esp      = document.getElementById('especialidad').value;
+      const pass     = document.getElementById('pass').value.trim();
+      const err      = document.getElementById('err-msg');
+      const ok       = document.getElementById('ok-msg');
+
+      err.style.display = 'none';
+      ok.style.display  = 'none';
+
+      if (!nombre || !apellido || !correo || !esp || !pass) {
+        err.textContent = 'Completa todos los campos obligatorios antes de continuar.';
+        err.style.display = 'block';
+        return;
+      }
+
+      if (pass.length < 8) {
+        err.textContent = 'La contrasena debe contener al menos 8 caracteres.';
+        err.style.display = 'block';
+        return;
+      }
+
+      ok.style.display = 'block';
+      setTimeout(() => { window.location.href = 'dashboard.html'; }, 1500);
+    });
+  </script>
+
+</body>
+</html>
